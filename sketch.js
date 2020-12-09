@@ -1,79 +1,45 @@
-var Engine = Matter.Engine,
-  World = Matter.World,
-  Events = Matter.Events,
-  Bodies = Matter.Bodies;
- 
-var particles = [];
-var plinkos = [];
+const Engine= Matter.Engine
+const World= Matter.World
+const Bodies= Matter.Bodies
+const Constraint= Matter.Constraint
 
-var divisionHeight=300;
-var score =0;
+var engine,world
 function setup() {
-  createCanvas(800, 800);
-  engine = Engine.create();
-  world = engine.world;
-  ground = new Ground(width/2,height,width,20);
+  createCanvas(1000,700);
+  
+engine= Engine.create()
+world=engine.world;
 
+ground=new Ground(width/2,height-20,width,20)
 
-   for (var k = 0; k <=width; k = k + 80) {
-     divisions.push(new Divisions(k, height-divisionHeight/2, 10, divisionHeight));
-   }
+ball1=new Ball(200,200,50)
 
+chain1=new Chain(ball1.body,{x:200,y:10})
 
-    for (var j = 75; j <=width; j=j+50) 
-    {
-    
-       plinkos.push(new Plinko(j,75));
-    }
-
-    for (var j = 50; j <=width-10; j=j+50) 
-    {
-    
-       plinkos.push(new Plinko(j,175));
-    }
-
-     for (var j = 75; j <=width; j=j+50) 
-    {
-    
-       plinkos.push(new Plinko(j,275));
-    }
-
-     for (var j = 50; j <=width-10; j=j+50) 
-    {
-    
-       plinkos.push(new Plinko(j,375));
-    }
-
-    
-
-    
+box1=new Box (300,400,50,50)
+box2=new Box (300,450,50,50)
+box3=new Box (300,500,50,50)
+box4=new Box (300,550,50,50)
+box5=new Box (300,600,50,50)
 }
- 
-
 
 function draw() {
-  background("black");
-  textSize(20)
- //text("Score : "+score,20,30);
-  Engine.update(engine);
- 
-  
-   for (var i = 0; i < plinkos.length; i++) {
-     
-     plinkos[i].display();
-     
-   }
-   if(frameCount%60===0){
-     particles.push(new particle(random(width/2-30, width/2+30), 10,10));
-     score++;
-   }
- 
-  for (var j = 0; j < particles.length; j++) {
+  background("black");  
+  Engine.update(engine)
    
-     particles[j].display();
-   }
-   for (var k = 0; k < divisions.length; k++) {
-     
-     divisions[k].display();
-   }
+
+  //display
+ground.display()
+ball1.display()
+chain1.display()
+box1.display()
+box2.display()
+box3.display()
+box4.display()
+box5.display()
 }
+
+function mouseDragged() {
+Matter .Body.setPosition(ball1.body,{x:mouseX,y:mouseY})
+}
+
